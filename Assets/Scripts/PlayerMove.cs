@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public float forcePowerUp = 4;
-    public float forcePowerHorizontal = 1;
+    public float forcePowerHorizontal = 0.15f;
 
     void Update()
     {
