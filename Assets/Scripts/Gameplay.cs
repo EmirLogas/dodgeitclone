@@ -10,15 +10,17 @@ public class Gameplay : MonoBehaviour
     public int redCount = 1, score = 0;
     public Text txt;
     Rigidbody2D rb;
-    public bool IsFrozen2;
+    public bool IsFrozen;
     public GameObject pressWtext;
     public bool isDead;
 
     void Start()
     {
-        IsFrozen2 = true;
         rb = GetComponent<Rigidbody2D>();
+        IsFrozen = true;
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+
+        isDead = false;
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         GameObject a = Instantiate(blackPrefab) as GameObject;
         a.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
@@ -54,12 +56,17 @@ public class Gameplay : MonoBehaviour
             txt.text = score.ToString();
             SpawnObject(redCount);
         }
+        else if (other.gameObject.name.Contains("MapColliderUp") || other.gameObject.name.Contains("MapColliderDown") || other.gameObject.name.Contains("MapColliderLeft") || other.gameObject.name.Contains("MapColliderRight"))
+        {
+            isDead = true;
+            FrozePlayer();
+        }
     }
 
     public void Update()
     {
         //Using for when start game and click "w" unfrozen the player.
-        if (IsFrozen2 == true && Input.GetKeyDown("w") && isDead == false)
+        if (IsFrozen == true && Input.GetKeyDown(KeyCode.W) && isDead == false)
         {
             UnFrozePlayer();
         }
@@ -69,14 +76,13 @@ public class Gameplay : MonoBehaviour
     public void FrozePlayer()
     {
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-        bool IsFrozen = (rb.constraints & RigidbodyConstraints2D.FreezePosition) == RigidbodyConstraints2D.FreezePosition;
-        IsFrozen2 = IsFrozen;
+        IsFrozen = true;
     }
 
     //When you want unfroze player use this void
     public void UnFrozePlayer()
     {
-        IsFrozen2 = false;
+        IsFrozen = false;
         rb.constraints = RigidbodyConstraints2D.None;
         pressWtext.gameObject.SetActive(false);
     }
