@@ -38,17 +38,20 @@ public class Gameplay : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name.Contains("Circle (1)"))
+        if (other.gameObject.name.Contains("redDot"))
         {
             Debug.Log("kek");
             Application.Quit();
         }
-        Destroy(other.gameObject);
-        redCount += 2;
-        score++;
-        txt.text = score.ToString();
+        else if (other.gameObject.name.Contains("BlackDot"))
+        {
+            Destroy(other.gameObject);
+            redCount += 2;
+            score++;
+            txt.text = score.ToString();
+            SpawnObject(redCount);
+        }
         
-        SpawnObject(redCount);
     }
 
     public void Update()
