@@ -59,7 +59,7 @@ public class Gameplay : MonoBehaviour
             txt.text = score.ToString();
             SpawnObject(redCount);
         }
-        else if (other.gameObject.name.Contains("MapColliderUp") || other.gameObject.name.Contains("MapColliderDown") || other.gameObject.name.Contains("MapColliderLeft") || other.gameObject.name.Contains("MapColliderRight"))
+        else if (other.gameObject.name.Contains("TopCollider") || other.gameObject.name.Contains("BottomCollider") || other.gameObject.name.Contains("LeftCollider") || other.gameObject.name.Contains("RightCollider"))
         {
             isDead = true;
             FrozePlayer();
