@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,20 +5,26 @@ public class Gameplay : MonoBehaviour
 {
     public GameObject blackPrefab, redPrefab;
     private Vector2 screenBounds;
-    public int redCount, score;
+    private int score;
     public Text txt;
     Rigidbody2D rb;
-    public bool IsFrozen;
+    private bool IsFrozen;
     public GameObject pressWtext;
-    public bool isDead;
+    private bool isDead;
+    public AudioSource aSou;
+    public AudioClip clip1, clip2, clip3, clip4,clip5;
+    private bool played1 = false, played2 = false, played3 = false,played4=false;
 
+    private void Awake()
+    {
+        aSou.Stop();
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         IsFrozen = true;
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
 
-        redCount = 1;
         score = 0;
         isDead = false;
 
@@ -31,15 +35,12 @@ public class Gameplay : MonoBehaviour
         b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
 
     }
-    void SpawnObject(int redCount)
+    void SpawnObject()
     {
         GameObject a = Instantiate(blackPrefab) as GameObject;
         a.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-        for (int i = 0; i < redCount; i++)
-        {
-            GameObject b = Instantiate(redPrefab) as GameObject;
-            b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-        }
+        GameObject b = Instantiate(redPrefab) as GameObject;
+        b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -54,15 +55,44 @@ public class Gameplay : MonoBehaviour
         else if (other.gameObject.name.Contains("BlackDot"))
         {
             Destroy(other.gameObject);
-            redCount += 2;
             score++;
             txt.text = score.ToString();
-            SpawnObject(redCount);
+            SpawnObject();
         }
         else if (other.gameObject.name.Contains("TopCollider") || other.gameObject.name.Contains("BottomCollider") || other.gameObject.name.Contains("LeftCollider") || other.gameObject.name.Contains("RightCollider"))
         {
             isDead = true;
+            aSou.Stop();
             FrozePlayer();
+        }
+
+        if (score >= 10 && score <= 20 && played1==false)
+        {
+            aSou.Stop();
+            aSou.clip = clip2;
+            aSou.Play();
+            played1 = true;
+        }
+        else if (score >= 20 && score <= 30 && played2==false)
+        {
+            aSou.Stop();
+            aSou.clip = clip3;
+            aSou.Play();
+            played2 = true;
+        }
+        else if (score >= 30 && score <= 40 && played3==false)
+        {
+            aSou.Stop();
+            aSou.clip = clip4;
+            aSou.Play();
+            played3 = true;
+        }
+        else if (score >= 40 && score <= 50 && played4 == false)
+        {
+            aSou.Stop();
+            aSou.clip = clip5;
+            aSou.Play();
+            played4 = true;
         }
     }
 
@@ -71,7 +101,19 @@ public class Gameplay : MonoBehaviour
         //Using for when start game and click "w" unfrozen the player.
         if (IsFrozen == true && Input.GetKeyDown(KeyCode.W) && isDead == false)
         {
+            aSou.clip = clip1;
+            aSou.Play();
             UnFrozePlayer();
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            score++;
+            txt.text = score.ToString();
+        }
+        if (isDead==true)
+        {
+            aSou.Stop();
         }
     }
 
