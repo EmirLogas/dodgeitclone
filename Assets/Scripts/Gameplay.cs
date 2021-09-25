@@ -39,11 +39,13 @@ public class Gameplay : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        //When touch redDots
         if (other.gameObject.name.Contains("redDot"))
         {
             isDead = true;
             FrozePlayer();
         }
+        //When touch BlackDot
         else if (other.gameObject.name.Contains("BlackDot"))
         {
             Destroy(other.gameObject);
@@ -56,12 +58,14 @@ public class Gameplay : MonoBehaviour
 
     public void Update()
     {
+        //Using for when start game and click "w" unfrozen the player.
         if (IsFrozen2 == true && Input.GetKeyDown("w") && isDead == false)
         {
             UnFrozePlayer();
         }
     }
 
+    //When you want froze player use this void
     public void FrozePlayer()
     {
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
@@ -69,6 +73,7 @@ public class Gameplay : MonoBehaviour
         IsFrozen2 = IsFrozen;
     }
 
+    //When you want unfroze player use this void
     public void UnFrozePlayer()
     {
         IsFrozen2 = false;
