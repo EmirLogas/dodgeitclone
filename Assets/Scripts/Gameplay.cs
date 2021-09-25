@@ -7,7 +7,7 @@ public class Gameplay : MonoBehaviour
 {
     public GameObject blackPrefab, redPrefab;
     private Vector2 screenBounds;
-    public int redCount = 1, score = 0;
+    public int redCount, score;
     public Text txt;
     Rigidbody2D rb;
     public bool IsFrozen;
@@ -20,7 +20,10 @@ public class Gameplay : MonoBehaviour
         IsFrozen = true;
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
 
+        redCount = 1;
+        score = 0;
         isDead = false;
+
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         GameObject a = Instantiate(blackPrefab) as GameObject;
         a.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
@@ -42,7 +45,7 @@ public class Gameplay : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         //When touch redDots
-        if (other.gameObject.name.Contains("redDot"))
+        if (other.gameObject.name.Contains("RedDot"))
         {
             isDead = true;
             FrozePlayer();
