@@ -19,6 +19,8 @@ public class Gameplay : MonoBehaviour
     public GameObject menuC;
     public GameObject Settings;
     public GameObject StartButton, SettingsButton,QuitButton;
+    public Slider volumeSlider;
+
 
     private void Awake()
     {
@@ -26,6 +28,7 @@ public class Gameplay : MonoBehaviour
     }
     void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
         IsFrozen = true;
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
@@ -162,6 +165,11 @@ public class Gameplay : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+    public void VolumeChange()
+    {
+        aSou.volume = volumeSlider.value / 100;
+
     }
 
 }
