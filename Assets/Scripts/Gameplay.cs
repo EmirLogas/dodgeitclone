@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Gameplay : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class Gameplay : MonoBehaviour
     public AudioSource aSou;
     public AudioClip clip1, clip2, clip3, clip4,clip5;
     private bool played1 = false, played2 = false, played3 = false,played4=false;
+
+    public GameObject menuC;
+    public GameObject Settings;
+    public GameObject StartButton, SettingsButton,QuitButton;
 
     private void Awake()
     {
@@ -49,6 +54,9 @@ public class Gameplay : MonoBehaviour
         if (other.gameObject.name.Contains("RedDot"))
         {
             isDead = true;
+            transform.position = new Vector3(0, 0, 0);
+            pressWtext.SetActive(true);
+            
             FrozePlayer();
         }
         //When touch BlackDot
@@ -114,6 +122,7 @@ public class Gameplay : MonoBehaviour
         if (isDead==true)
         {
             aSou.Stop();
+            menuC.SetActive(true);
         }
     }
 
@@ -131,4 +140,28 @@ public class Gameplay : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.None;
         pressWtext.gameObject.SetActive(false);
     }
+    public void ReloadScene()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+    public void OpenSettings()
+    {
+        StartButton.SetActive(false);
+        SettingsButton.SetActive(false);
+        QuitButton.SetActive(false);
+        Settings.SetActive(true);
+    }
+    public void CloseSettings()
+    {
+        StartButton.SetActive(true);
+        SettingsButton.SetActive(true);
+        QuitButton.SetActive(true);
+        Settings.SetActive(false);
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }
