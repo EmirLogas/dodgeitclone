@@ -46,7 +46,7 @@ public class Gameplay : MonoBehaviour
         if (PlayerPrefs.HasKey("volume"))
         {
             aSou.volume = PlayerPrefs.GetFloat("volume");
-            volumeSlider.value = PlayerPrefs.GetFloat("volume");
+            volumeSlider.value = aSou.volume;
         }
     }
     void SpawnObject()
@@ -174,8 +174,8 @@ public class Gameplay : MonoBehaviour
     }
     public void VolumeChange()
     {
-        aSou.volume = volumeSlider.value / 100;
-        PlayerPrefs.SetFloat("volume", volumeSlider.value / 100);
+        aSou.volume = volumeSlider.value;
+        PlayerPrefs.SetFloat("volume", volumeSlider.value);
     }
 
 }
