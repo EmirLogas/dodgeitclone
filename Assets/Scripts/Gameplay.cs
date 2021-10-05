@@ -13,12 +13,12 @@ public class Gameplay : MonoBehaviour
     public GameObject pressWtext;
     private bool isDead;
     public AudioSource aSou;
-    public AudioClip clip1, clip2, clip3, clip4,clip5;
-    private bool played1 = false, played2 = false, played3 = false,played4=false;
+    public AudioClip clip1, clip2, clip3, clip4, clip5;
+    private bool played1 = false, played2 = false, played3 = false, played4 = false;
 
     public GameObject menuC;
     public GameObject Settings;
-    public GameObject StartButton, SettingsButton,QuitButton;
+    public GameObject StartButton, SettingsButton, QuitButton;
     public Slider volumeSlider;
 
 
@@ -42,6 +42,12 @@ public class Gameplay : MonoBehaviour
         GameObject b = Instantiate(redPrefab) as GameObject;
         b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
 
+
+        if (PlayerPrefs.HasKey("volume"))
+        {
+            aSou.volume = PlayerPrefs.GetFloat("volume");
+            volumeSlider.value = PlayerPrefs.GetFloat("volume");
+        }
     }
     void SpawnObject()
     {
@@ -59,7 +65,7 @@ public class Gameplay : MonoBehaviour
             isDead = true;
             transform.position = new Vector3(0, 0, 0);
             pressWtext.SetActive(true);
-            
+
             FrozePlayer();
         }
         //When touch BlackDot
@@ -77,21 +83,21 @@ public class Gameplay : MonoBehaviour
             FrozePlayer();
         }
 
-        if (score >= 10 && score <= 20 && played1==false)
+        if (score >= 10 && score <= 20 && played1 == false)
         {
             aSou.Stop();
             aSou.clip = clip2;
             aSou.Play();
             played1 = true;
         }
-        else if (score >= 20 && score <= 30 && played2==false)
+        else if (score >= 20 && score <= 30 && played2 == false)
         {
             aSou.Stop();
             aSou.clip = clip3;
             aSou.Play();
             played2 = true;
         }
-        else if (score >= 30 && score <= 40 && played3==false)
+        else if (score >= 30 && score <= 40 && played3 == false)
         {
             aSou.Stop();
             aSou.clip = clip4;
@@ -122,7 +128,7 @@ public class Gameplay : MonoBehaviour
             score++;
             txt.text = score.ToString();
         }
-        if (isDead==true)
+        if (isDead == true)
         {
             aSou.Stop();
             menuC.SetActive(true);
@@ -169,7 +175,7 @@ public class Gameplay : MonoBehaviour
     public void VolumeChange()
     {
         aSou.volume = volumeSlider.value / 100;
-
+        PlayerPrefs.SetFloat("volume", volumeSlider.value / 100);
     }
 
 }
