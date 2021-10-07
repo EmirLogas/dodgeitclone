@@ -18,8 +18,10 @@ public class Gameplay : MonoBehaviour
 
     public GameObject menuC;
     public GameObject Settings;
-    public GameObject StartButton, SettingsButton, QuitButton;
+    public GameObject MainButtons;
     public Slider volumeSlider;
+    public Text volumeValuetxt;
+    public GameObject Market;
 
 
     private void Awake()
@@ -156,16 +158,12 @@ public class Gameplay : MonoBehaviour
     }
     public void OpenSettings()
     {
-        StartButton.SetActive(false);
-        SettingsButton.SetActive(false);
-        QuitButton.SetActive(false);
+        MainButtons.SetActive(false);
         Settings.SetActive(true);
     }
     public void CloseSettings()
     {
-        StartButton.SetActive(true);
-        SettingsButton.SetActive(true);
-        QuitButton.SetActive(true);
+        MainButtons.SetActive(true);
         Settings.SetActive(false);
     }
     public void ExitGame()
@@ -176,6 +174,16 @@ public class Gameplay : MonoBehaviour
     {
         aSou.volume = volumeSlider.value;
         PlayerPrefs.SetFloat("volume", volumeSlider.value);
+        volumeValuetxt.text = (volumeSlider.value * 100).ToString();
     }
-
+    public void OpenMarket()
+    {
+        MainButtons.SetActive(false);
+        Market.SetActive(true);
+    }
+    public void CloseMarket()
+    {
+        MainButtons.SetActive(true);
+        Market.SetActive(false);
+    }
 }
