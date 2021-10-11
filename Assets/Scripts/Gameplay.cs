@@ -11,7 +11,7 @@ public class Gameplay : MonoBehaviour
     Rigidbody2D rb;
     private bool IsFrozen;
     public GameObject pressWtext;
-    private bool isDead;
+    private bool isDead,inMenu;
     public AudioSource aSou;
     public AudioClip clip1, clip2, clip3, clip4, clip5;
     private bool played1 = false, played2 = false, played3 = false, played4 = false;
@@ -22,6 +22,8 @@ public class Gameplay : MonoBehaviour
     public Slider volumeSlider;
     public Text volumeValuetxt;
     public GameObject Market;
+
+    public GameObject startButton,resumeButton;
 
 
     private void Awake()
@@ -34,6 +36,8 @@ public class Gameplay : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         IsFrozen = true;
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+
+        inMenu = false;
 
         score = 0;
         isDead = false;
@@ -55,8 +59,11 @@ public class Gameplay : MonoBehaviour
     {
         GameObject a = Instantiate(blackPrefab) as GameObject;
         a.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-        GameObject b = Instantiate(redPrefab) as GameObject;
-        b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject b = Instantiate(redPrefab) as GameObject;
+            b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -84,56 +91,97 @@ public class Gameplay : MonoBehaviour
             aSou.Stop();
             FrozePlayer();
         }
+        scoreControl();
 
+    }
+    public void scoreControl()
+    {
+        if (score >= 0 && score <= 10)
+        {
+            zeroTenSong();
+        }
         if (score >= 10 && score <= 20 && played1 == false)
         {
-            aSou.Stop();
-            aSou.clip = clip2;
-            aSou.Play();
-            played1 = true;
+            tenTwentySong();
         }
         else if (score >= 20 && score <= 30 && played2 == false)
         {
-            aSou.Stop();
-            aSou.clip = clip3;
-            aSou.Play();
-            played2 = true;
+            twentyThirtySong();
         }
         else if (score >= 30 && score <= 40 && played3 == false)
         {
-            aSou.Stop();
-            aSou.clip = clip4;
-            aSou.Play();
-            played3 = true;
+            thirtyFourtySong();
         }
         else if (score >= 40 && score <= 50 && played4 == false)
         {
-            aSou.Stop();
-            aSou.clip = clip5;
-            aSou.Play();
-            played4 = true;
+            fourtyFiftySong();
         }
     }
-
+    // Song play ----------------------------------------
+    public void zeroTenSong()
+    {
+        aSou.clip = clip1;
+        aSou.Play();
+    }
+    public void tenTwentySong()
+    {
+        aSou.Stop();
+        aSou.clip = clip2;
+        aSou.Play();
+        played1 = true;
+    }
+    public void twentyThirtySong()
+    {
+        aSou.Stop();
+        aSou.clip = clip3;
+        aSou.Play();
+        played2 = true;
+    }
+    public void thirtyFourtySong()
+    {
+        aSou.Stop();
+        aSou.clip = clip4;
+        aSou.Play();
+        played3 = true;
+    }
+    public void fourtyFiftySong()
+    {
+        aSou.Stop();
+        aSou.clip = clip5;
+        aSou.Play();
+        played4 = true;
+    }
+    //--------------------------------------------------
     public void Update()
     {
         //Using for when start game and click "w" unfrozen the player.
-        if (IsFrozen == true && Input.GetKeyDown(KeyCode.W) && isDead == false)
+        if (IsFrozen == true && Input.GetKeyDown(KeyCode.W) && isDead == false && inMenu==false)
         {
-            aSou.clip = clip1;
-            aSou.Play();
+            scoreControl();
+            pressWtext.gameObject.SetActive(false);
             UnFrozePlayer();
         }
-
+        //Using for tests.
         if (Input.GetKeyDown(KeyCode.H))
         {
             score++;
             txt.text = score.ToString();
+            scoreControl();
+            for (int i = 0; i < 2; i++)
+            {
+                GameObject b = Instantiate(redPrefab) as GameObject;
+                b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+            }
+
         }
         if (isDead == true)
         {
             aSou.Stop();
             menuC.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
         }
     }
 
@@ -149,7 +197,7 @@ public class Gameplay : MonoBehaviour
     {
         IsFrozen = false;
         rb.constraints = RigidbodyConstraints2D.None;
-        pressWtext.gameObject.SetActive(false);
+        aSou.UnPause();
     }
     public void ReloadScene()
     {
@@ -185,5 +233,22 @@ public class Gameplay : MonoBehaviour
     {
         MainButtons.SetActive(true);
         Market.SetActive(false);
+    }
+    public void Pause()
+    {
+        FrozePlayer();
+        aSou.Pause();
+        menuC.SetActive(true);
+        startButton.SetActive(false);
+        resumeButton.SetActive(true);
+        pressWtext.gameObject.SetActive(true);
+        inMenu =true;
+    }
+    public void Resume()
+    {
+        menuC.SetActive(false);
+        startButton.SetActive(true);
+        resumeButton.SetActive(false);
+        inMenu = false;
     }
 }
