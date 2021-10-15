@@ -13,7 +13,9 @@ public class Gameplay : MonoBehaviour
     private bool IsFrozen;
 
     // Prefabs
-    public GameObject blackPrefab, redPrefab;
+    public GameObject blackPrefab,redPrefab;
+    private GameObject[] redPrefabArray = new GameObject[300];// For red prefabs
+    public short redPrefabCount=0;// Red prefab count in array
 
     // Score
     [SerializeField]
@@ -38,6 +40,8 @@ public class Gameplay : MonoBehaviour
     // Settings/Volume
     public Slider volumeSlider;
     public Text volumeValueTxt;
+    // Market Power 1 -- İce Box
+    public GameObject icePrefab;
 
     private void Awake()
     {
@@ -59,11 +63,7 @@ public class Gameplay : MonoBehaviour
         // Set screen size
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
-        // Spawn one red one black blank for start
-        GameObject a = Instantiate(blackPrefab) as GameObject;
-        a.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-        GameObject b = Instantiate(redPrefab) as GameObject;
-        b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+        SpawnObject();
 
         // Check saved volume settings
         if (PlayerPrefs.HasKey("volume"))
@@ -82,7 +82,6 @@ public class Gameplay : MonoBehaviour
             isDead = true;
             transform.position = new Vector3(0, 0, 0);
             pressWtext.SetActive(true);
-
             FrozePlayer();
         }
         //When touch BlackDot
@@ -103,12 +102,30 @@ public class Gameplay : MonoBehaviour
     }
     void SpawnObject()
     {
+
         GameObject blackPrefab_Instantiate = Instantiate(blackPrefab) as GameObject;
         blackPrefab_Instantiate.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
 
+
         GameObject redPrefab_Instantiate = Instantiate(redPrefab) as GameObject;
         redPrefab_Instantiate.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-
+        redPrefabCount = 1;
+        for (int i = 0; i < redPrefabArray.Length; i++)
+        {
+            try // If next index is null, assign the object to null.
+            {
+                if (redPrefabArray[i].ToString() == "qwerty")
+                {
+                }
+                redPrefabCount++;
+            }
+            catch (System.NullReferenceException)
+            {
+                redPrefabArray[i] = redPrefab_Instantiate;
+                
+                break;
+            }// ----------------------------------------------------
+        }
     }
     public void ChangeMusic()
     {
@@ -156,11 +173,9 @@ public class Gameplay : MonoBehaviour
             score++;
             score_Text.text = score.ToString();
             ChangeMusic();
-            for (int i = 0; i < 2; i++)
-            {
-                GameObject b = Instantiate(redPrefab) as GameObject;
-                b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-            }
+            GameObject b = Instantiate(redPrefab) as GameObject;
+            b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+            redPrefabCount++;
 
         }
         if (isDead == true)
@@ -171,6 +186,10 @@ public class Gameplay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
+        }
+        if (Input.GetKeyDown(KeyCode.Z))// Power 1 , ice the red prefs
+        {
+            MakeThemUntouchable();
         }
     }
     //When you want froze player use this void
@@ -240,5 +259,17 @@ public class Gameplay : MonoBehaviour
         startButton.SetActive(true);
         resumeButton.SetActive(false);
         inMenu = false;
+    }
+    public void MakeThemUntouchable()
+    {
+        for (int i = 0; i < redPrefabCount; i++) // Spawn icepref on top of the redprefs in redPrefabArray. 
+        {
+            GameObject a = redPrefabArray[i];
+            float x, y;
+            x = a.transform.position.x;
+            y = a.transform.position.y;
+            GameObject k = Instantiate(icePrefab) as GameObject;
+            k.transform.position = new Vector2(x,y);
+        }
     }
 }

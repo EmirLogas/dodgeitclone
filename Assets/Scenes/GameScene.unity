@@ -958,6 +958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackPrefab: {fileID: 4606412092813576810, guid: 7c8aa031852750a46bce7e1e24ddf1d4, type: 3}
   redPrefab: {fileID: 303693718918687638, guid: ef6032f61fe03794fa81aaad9a9e268d, type: 3}
+  redPrefabCount: 0
   score: 0
   score_Text: {fileID: 455430546}
   aSou: {fileID: 1617588404}
@@ -976,6 +977,7 @@ MonoBehaviour:
   settings_Panel: {fileID: 436523463}
   volumeSlider: {fileID: 482012363}
   volumeValueTxt: {fileID: 8015051}
+  icePrefab: {fileID: 2974214212271876738, guid: 96fad516be3eb62499b57f5108d9b456, type: 3}
 --- !u!58 &1010333508
 CircleCollider2D:
   m_ObjectHideFlags: 0
