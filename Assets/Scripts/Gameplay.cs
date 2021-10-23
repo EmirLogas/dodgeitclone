@@ -13,9 +13,13 @@ public class Gameplay : MonoBehaviour
     private bool IsFrozen;
 
     // Prefabs
-    public GameObject blackPrefab,redPrefab;
-    private GameObject[] redPrefabArray = new GameObject[300];// For red prefabs
-    public short redPrefabCount=0;// Red prefab count in array
+    public GameObject blackPrefab, redPrefab;
+
+    //list is better than array
+    //private GameObject[] redPrefabArray = new GameObject[300];// For red prefabs
+    List<GameObject> redPrefabList = new List<GameObject>();// For red prefabs
+
+    //public short redPrefabCount = 0; // u can use redPrefabList.count
 
     // Score
     [SerializeField]
@@ -63,6 +67,7 @@ public class Gameplay : MonoBehaviour
         // Set screen size
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
+        // Spawn a RedDot and BlackDot for Start the game
         SpawnObject();
 
         // Check saved volume settings
@@ -109,8 +114,9 @@ public class Gameplay : MonoBehaviour
 
         GameObject redPrefab_Instantiate = Instantiate(redPrefab) as GameObject;
         redPrefab_Instantiate.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-        redPrefabCount = 1;
-        for (int i = 0; i < redPrefabArray.Length; i++)
+
+        // redPrefabList.Add(redPrefab_Instantiate); is better for here.
+        /*for (int i = 0; i < redPrefabArray.Length; i++)
         {
             try // If next index is null, assign the object to null.
             {
@@ -122,10 +128,12 @@ public class Gameplay : MonoBehaviour
             catch (System.NullReferenceException)
             {
                 redPrefabArray[i] = redPrefab_Instantiate;
-                
+
                 break;
             }// ----------------------------------------------------
-        }
+        }*/
+
+        redPrefabList.Add(redPrefab_Instantiate);
     }
     public void ChangeMusic()
     {
@@ -175,8 +183,7 @@ public class Gameplay : MonoBehaviour
             ChangeMusic();
             GameObject b = Instantiate(redPrefab) as GameObject;
             b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
-            redPrefabCount++;
-
+            redPrefabList.Add(b);
         }
         if (isDead == true)
         {
@@ -185,7 +192,7 @@ public class Gameplay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Pause();
+            PauseGame();
         }
         if (Input.GetKeyDown(KeyCode.Z))// Power 1 , ice the red prefs
         {
@@ -243,7 +250,7 @@ public class Gameplay : MonoBehaviour
         mainButtons.SetActive(true);
         market_Panel.SetActive(false);
     }
-    public void Pause()
+    public void PauseGame()
     {
         FrozePlayer();
         aSou.Pause();
@@ -253,7 +260,7 @@ public class Gameplay : MonoBehaviour
         pressWtext.gameObject.SetActive(true);
         inMenu = true;
     }
-    public void Resume()
+    public void ResumeGame()
     {
         menu_Canvas.SetActive(false);
         startButton.SetActive(true);
@@ -262,14 +269,15 @@ public class Gameplay : MonoBehaviour
     }
     public void MakeThemUntouchable()
     {
-        for (int i = 0; i < redPrefabCount; i++) // Spawn icepref on top of the redprefs in redPrefabArray. 
+        for (int i = 0; i < redPrefabList.Count; i++) // Spawn icepref on top of the redprefs in redPrefabArray. 
         {
-            GameObject a = redPrefabArray[i];
+            GameObject a = redPrefabList[i];
+            a.GetComponent<Collider2D>().enabled = false;
             float x, y;
             x = a.transform.position.x;
             y = a.transform.position.y;
             GameObject k = Instantiate(icePrefab) as GameObject;
-            k.transform.position = new Vector2(x,y);
+            k.transform.position = new Vector2(x, y);
         }
     }
 }

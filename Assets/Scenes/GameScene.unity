@@ -2675,7 +2675,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1010333506}
         m_TargetAssemblyTypeName: Gameplay, Assembly-CSharp
-        m_MethodName: Resume
+        m_MethodName: ResumeGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
