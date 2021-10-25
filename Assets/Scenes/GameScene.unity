@@ -522,9 +522,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1709576107}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -958,7 +958,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackPrefab: {fileID: 4606412092813576810, guid: 7c8aa031852750a46bce7e1e24ddf1d4, type: 3}
   redPrefab: {fileID: 303693718918687638, guid: ef6032f61fe03794fa81aaad9a9e268d, type: 3}
-  redPrefabCount: 0
   score: 0
   score_Text: {fileID: 455430546}
   aSou: {fileID: 1617588404}

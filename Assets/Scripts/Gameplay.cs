@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System;
 
 public class Gameplay : MonoBehaviour
 {
@@ -75,10 +76,9 @@ public class Gameplay : MonoBehaviour
         {
             aSou.volume = PlayerPrefs.GetFloat("volume");
             volumeSlider.value = aSou.volume;
-            volumeValueTxt.text = (volumeSlider.value * 100).ToString();
+            volumeValueTxt.text =  Convert.ToInt32(volumeSlider.value).ToString();
         }
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         //When touch redDots
@@ -109,11 +109,11 @@ public class Gameplay : MonoBehaviour
     {
 
         GameObject blackPrefab_Instantiate = Instantiate(blackPrefab) as GameObject;
-        blackPrefab_Instantiate.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+        blackPrefab_Instantiate.transform.position = new Vector2(UnityEngine.Random.Range(-screenBounds.x, screenBounds.x), UnityEngine.Random.Range(-screenBounds.y, screenBounds.y));
 
 
         GameObject redPrefab_Instantiate = Instantiate(redPrefab) as GameObject;
-        redPrefab_Instantiate.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+        redPrefab_Instantiate.transform.position = new Vector2(UnityEngine.Random.Range(-screenBounds.x, screenBounds.x), UnityEngine.Random.Range(-screenBounds.y, screenBounds.y));
 
         // redPrefabList.Add(redPrefab_Instantiate); is better for here.
         /*for (int i = 0; i < redPrefabArray.Length; i++)
@@ -182,7 +182,7 @@ public class Gameplay : MonoBehaviour
             score_Text.text = score.ToString();
             ChangeMusic();
             GameObject b = Instantiate(redPrefab) as GameObject;
-            b.transform.position = new Vector2(Random.Range(-screenBounds.x, screenBounds.x), Random.Range(-screenBounds.y, screenBounds.y));
+            b.transform.position = new Vector2(UnityEngine.Random.Range(-screenBounds.x, screenBounds.x), UnityEngine.Random.Range(-screenBounds.y, screenBounds.y));
             redPrefabList.Add(b);
         }
         if (isDead == true)
@@ -237,7 +237,7 @@ public class Gameplay : MonoBehaviour
         PlayerPrefs.SetFloat("volume", volumeSlider.value);
         if (menu_Canvas.activeSelf == true)
         {
-            volumeValueTxt.text = (volumeSlider.value * 100).ToString();
+            volumeValueTxt.text =  Convert.ToInt32(volumeSlider.value).ToString();
         }
     }
     public void OpenMarket()
