@@ -77,7 +77,7 @@ public class Gameplay : MonoBehaviour
         {
             aSou.volume = PlayerPrefs.GetFloat("volume");
             volumeSlider.value = aSou.volume;
-            volumeValueTxt.text =  Convert.ToInt32(volumeSlider.value).ToString();
+            volumeValueTxt.text = Mathf.Round(volumeSlider.value * 100).ToString();
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
