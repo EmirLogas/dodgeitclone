@@ -174,7 +174,7 @@ public class Gameplay : MonoBehaviour
     {
         aSou.volume = volumeSlider.value;
         PlayerPrefs.SetFloat("volume", volumeSlider.value);
-        volumeValuetxt.text = (volumeSlider.value * 100).ToString();
+        volumeValuetxt.text = Mathf.Round(volumeSlider.value * 100).ToString();
     }
     public void OpenMarket()
     {
