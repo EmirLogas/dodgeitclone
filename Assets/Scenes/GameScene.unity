@@ -958,6 +958,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackPrefab: {fileID: 4606412092813576810, guid: 7c8aa031852750a46bce7e1e24ddf1d4, type: 3}
   redPrefab: {fileID: 303693718918687638, guid: ef6032f61fe03794fa81aaad9a9e268d, type: 3}
+  iceSystem: {fileID: 4138088747524250803, guid: cfa5d8fc1084ed14e809638893014bcd, type: 3}
+  BlackDotSystem: {fileID: 748570815085346454, guid: a0b81f9de91d2bf48ba679a6b7a00229, type: 3}
   score: 0
   score_Text: {fileID: 455430546}
   aSou: {fileID: 1617588404}
@@ -977,22 +979,6 @@ MonoBehaviour:
   volumeSlider: {fileID: 482012363}
   volumeValueTxt: {fileID: 8015051}
   icePrefab: {fileID: 2974214212271876738, guid: 96fad516be3eb62499b57f5108d9b456, type: 3}
---- !u!58 &1010333508
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1010333505}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.375
 --- !u!50 &1010333509
 Rigidbody2D:
   serializedVersion: 4

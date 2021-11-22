@@ -15,6 +15,7 @@ public class Gameplay : MonoBehaviour
 
     // Prefabs
     public GameObject blackPrefab, redPrefab;
+    public ParticleSystem iceSystem,BlackDotSystem;
 
     //list is better than array
     //private GameObject[] redPrefabArray = new GameObject[300];// For red prefabs
@@ -89,9 +90,16 @@ public class Gameplay : MonoBehaviour
             pressWtext.SetActive(true);
             FrozePlayer();
         }
+
         //When touch BlackDot
         else if (other.gameObject.name.Contains("BlackDot"))
         {
+            //--- BlackDot particle spawn
+            Vector2 pos =other.gameObject.transform.position;
+            ParticleSystem pss = Instantiate(BlackDotSystem);
+            pss.transform.position = pos;
+            //----
+
             Destroy(other.gameObject);
             score++;
             score_Text.text = score.ToString();
@@ -114,25 +122,6 @@ public class Gameplay : MonoBehaviour
 
         GameObject redPrefab_Instantiate = Instantiate(redPrefab) as GameObject;
         redPrefab_Instantiate.transform.position = new Vector2(UnityEngine.Random.Range(-screenBounds.x, screenBounds.x), UnityEngine.Random.Range(-screenBounds.y, screenBounds.y));
-
-        // redPrefabList.Add(redPrefab_Instantiate); is better for here.
-        /*for (int i = 0; i < redPrefabArray.Length; i++)
-        {
-            try // If next index is null, assign the object to null.
-            {
-                if (redPrefabArray[i].ToString() == "qwerty")
-                {
-                }
-                redPrefabCount++;
-            }
-            catch (System.NullReferenceException)
-            {
-                redPrefabArray[i] = redPrefab_Instantiate;
-
-                break;
-            }// ----------------------------------------------------
-        }*/
-
         redPrefabList.Add(redPrefab_Instantiate);
     }
     public void ChangeMusic()
@@ -278,6 +267,8 @@ public class Gameplay : MonoBehaviour
             y = a.transform.position.y;
             GameObject k = Instantiate(icePrefab) as GameObject;
             k.transform.position = new Vector2(x, y);
+            ParticleSystem ps=Instantiate(iceSystem) as ParticleSystem;
+            ps.transform.position=new Vector2(x, y);
         }
     }
 }
