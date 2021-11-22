@@ -522,9 +522,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1709576107}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -958,36 +958,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackPrefab: {fileID: 4606412092813576810, guid: 7c8aa031852750a46bce7e1e24ddf1d4, type: 3}
   redPrefab: {fileID: 303693718918687638, guid: ef6032f61fe03794fa81aaad9a9e268d, type: 3}
-  txt: {fileID: 455430546}
-  pressWtext: {fileID: 2094673948}
+  iceSystem: {fileID: 4138088747524250803, guid: cfa5d8fc1084ed14e809638893014bcd, type: 3}
+  BlackDotSystem: {fileID: 748570815085346454, guid: a0b81f9de91d2bf48ba679a6b7a00229, type: 3}
+  score: 0
+  score_Text: {fileID: 455430546}
   aSou: {fileID: 1617588404}
-  clip1: {fileID: 8300000, guid: 85b8409c29d6c834c8724b27de91a6d9, type: 3}
-  clip2: {fileID: 8300000, guid: 974b5152f8322cd4e9a2c0b487fc6d64, type: 3}
-  clip3: {fileID: 8300000, guid: fbdf71746a29765418c1b0952840e851, type: 3}
-  clip4: {fileID: 8300000, guid: d0c7f6d0e0932704c907f916b9503a4c, type: 3}
-  clip5: {fileID: 8300000, guid: 35184f0c0a8b7bf4fb093d97922cc973, type: 3}
-  menuC: {fileID: 795303453}
-  Settings: {fileID: 436523463}
-  MainButtons: {fileID: 1959529461}
+  clips:
+  - {fileID: 8300000, guid: 85b8409c29d6c834c8724b27de91a6d9, type: 3}
+  - {fileID: 8300000, guid: 974b5152f8322cd4e9a2c0b487fc6d64, type: 3}
+  - {fileID: 8300000, guid: fbdf71746a29765418c1b0952840e851, type: 3}
+  - {fileID: 8300000, guid: d0c7f6d0e0932704c907f916b9503a4c, type: 3}
+  - {fileID: 8300000, guid: 35184f0c0a8b7bf4fb093d97922cc973, type: 3}
+  menu_Canvas: {fileID: 795303453}
+  mainButtons: {fileID: 1959529461}
+  market_Panel: {fileID: 325926314}
+  startButton: {fileID: 1435127641}
+  resumeButton: {fileID: 1816292579}
+  pressWtext: {fileID: 2094673948}
+  settings_Panel: {fileID: 436523463}
   volumeSlider: {fileID: 482012363}
-  volumeValuetxt: {fileID: 8015051}
-  Market: {fileID: 325926314}
---- !u!58 &1010333508
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1010333505}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.375
+  volumeValueTxt: {fileID: 8015051}
+  icePrefab: {fileID: 2974214212271876738, guid: 96fad516be3eb62499b57f5108d9b456, type: 3}
 --- !u!50 &1010333509
 Rigidbody2D:
   serializedVersion: 4
